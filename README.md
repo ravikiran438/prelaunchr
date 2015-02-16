@@ -1,4 +1,4 @@
-# Rails 4 Sample App on OpenShift #
+# Prelaunchr app  on OpenShift #
 Quickstart rails 4.2.0 application for openshift.
 
 The easiest way to install this application is to use the [OpenShift
