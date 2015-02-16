@@ -1,5 +1,5 @@
 # Prelaunchr app  on OpenShift #
-Quickstart rails 4.2.0 application for openshift.
+Quickstart guide for deploying the application to openshift.
 
 The easiest way to install this application is to use the [OpenShift
 Instant Application][template]. If you'd like to install it
