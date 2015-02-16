@@ -9,6 +9,14 @@ Rails.application.routes.draw do
 
   root 'users#new'
 
+  post 'users/create', to: 'users#create'
+  get 'refer-a-friend', to: 'users#refer'
+  get 'privacy-policy', to: 'users#policy'
+
+  unless Rails.application.config.consider_all_requests_local
+    match '*not_found', to: 'users#redirect', format: false, via: :all
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

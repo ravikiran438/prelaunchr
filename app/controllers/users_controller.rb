@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :skip_first_page, :only => :new
+    before_action :skip_first_page, only: :new
 
     def new
         @bodyId = 'home'
@@ -19,12 +19,12 @@ class UsersController < ApplicationController
         # If user doesnt exist, make them, and attach referrer
         if @user.nil?
 
-            cur_ip = IpAddress.find_by_address(request.env['HTTP_X_FORWARDED_FOR'])
+            cur_ip = IpAddress.find_by_address(request.remote_ip)
 
             if !cur_ip
                 cur_ip = IpAddress.create(
-                    :address => request.env['HTTP_X_FORWARDED_FOR'],
-                    :count => 0
+                    address: request.remote_ip,
+                    count: 0
                 )
             end
 
@@ -35,14 +35,14 @@ class UsersController < ApplicationController
                 cur_ip.save
             end
 
-            @user = User.new(:email => params[:user][:email])
+            @user = User.new(email_params)
 
             @referred_by = User.find_by_referral_code(cookies[:h_ref])
 
             puts '------------'
             puts @referred_by.email if @referred_by
             puts params[:user][:email].inspect
-            puts request.env['HTTP_X_FORWARDED_FOR'].inspect
+            puts request.remote_ip.inspect
             puts '------------'
 
             if !@referred_by.nil?
@@ -55,10 +55,10 @@ class UsersController < ApplicationController
         # Send them over refer action
         respond_to do |format|
             if !@user.nil?
-                cookies[:h_email] = { :value => @user.email }
+                cookies[:h_email] = { value: @user.email }
                 format.html { redirect_to '/refer-a-friend' }
             else
-                format.html { redirect_to root_path, :alert => "Something went wrong!" }
+                format.html { redirect_to root_path, alert: "Something went wrong!" }
             end
         end
     end
@@ -75,7 +75,7 @@ class UsersController < ApplicationController
             if !@user.nil?
                 format.html #refer.html.erb
             else
-                format.html { redirect_to root_path, :alert => "Something went wrong!" }
+                format.html { redirect_to root_path, alert: "Something went wrong!" }
             end
         end
     end
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
     end  
 
     def redirect
-        redirect_to root_path, :status => 404
+        redirect_to root_path, status: 404
     end
 
     private 
@@ -99,5 +99,13 @@ class UsersController < ApplicationController
                 cookies.delete :h_email
             end
         end
+    end
+
+     private
+    # Using a private method to encapsulate the permissible parameters is just a good pattern
+    # since you'll be able to reuse the same permit list between create and update. Also, you
+    # can specialize this method with per-user checking of permissible attributes.
+    def email_params
+      params.require(:user).permit(:email)
     end
 end
