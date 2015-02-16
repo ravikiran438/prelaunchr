@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://mirror.ops.rhcloud.com/mirror/ruby/'
 
 gem 'rails', '4.2.0'
 
