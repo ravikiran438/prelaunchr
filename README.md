@@ -1,5 +1,5 @@
 # Prelaunchr app  on OpenShift #
-Quickstart guide for deploying the application to openshift.
+Quickstart guide for deploying this application to openshift.
 
 The easiest way to install this application is to use the [OpenShift
 Instant Application][template]. If you'd like to install it
