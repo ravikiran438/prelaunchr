@@ -13,14 +13,14 @@
 
 ActiveRecord::Schema.define(version: 20150216020935) do
 
-  create_table "ip_addresses", force: :cascade do |t|
+  create_table "ip_addresses", force: true do |t|
     t.string   "address"
     t.integer  "count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: true do |t|
     t.string   "email"
     t.string   "referral_code"
     t.integer  "referrer_id"
