@@ -28,7 +28,32 @@
 <% 
     referrals_count = @user.referrals.count
 
-    stops = User::REFERRAL_STEPS
+    stops = [
+        {
+            'count' => 5,
+            "html" => "Shave<br>Cream",
+            "class" => "two",
+            "imageUrl" =>  "refer/cream-tooltip@2x.png"
+        },
+        {
+            'count' => 10,
+            "html" => "Truman Handle<br>w/ Blade",
+            "class" => "three",
+            "imageUrl" => "refer/truman@2x.png"
+        },
+        {
+            'count' => 25,
+            "html" => "Winston<br>Shave Set",
+            "class" => "four",
+            "imageUrl" => "refer/winston@2x.png"
+        },
+        {
+            'count' => 50,
+            "html" => "One Year<br>Free Blades",
+            "class" => "five",
+            "imageUrl" => "refer/blade-explain@2x.png"
+        }
+    ]
 
     found = nil
 
@@ -53,7 +78,7 @@
                     <p><%= stop["html"].html_safe %></p>
 
                     <div class="tooltip">
-                        <img src="<%= stop["image"] %>" height="254">
+                        <%= image_tag ("#{stop["imageUrl"]}") %>
                     </div>
                 </li>
             <% end %>
